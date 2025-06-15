@@ -1,0 +1,359 @@
+/* Basic Reset & Global Styles */
+:root {
+    --primary-green: #22c55e;
+    --dark-green: #16a34a;
+    --red-danger: #ef4444;
+    --grey-light: #f3f4f6;
+    --grey-medium: #9ca3af;
+    --text-color: #333;
+    --border-color: #e5e7eb;
+    --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f0f2f5; /* Light background for the whole page */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for longer content */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    padding: 20px;
+}
+
+/* General Container Styles */
+.login-container, .dashboard-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    width: 100%;
+    max-width: 500px; /* Max width for login */
+    margin-top: 50px; /* Push down from top */
+}
+
+.dashboard-container {
+    max-width: 1200px; /* Wider for dashboard */
+    margin-top: 20px; /* Less margin for dashboard */
+}
+
+
+/* Headings */
+h1, h2, h3 {
+    color: #1a202c;
+    margin-bottom: 20px;
+    text-align: center;
+}
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+
+/* Input Fields & Buttons */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: white;
+}
+
+/* Specific Button Styles */
+button[type="submit"], .btn-primary {
+    background-color: var(--primary-green);
+}
+
+button[type="submit"]:hover, .btn-primary:hover {
+    background-color: var(--dark-green);
+}
+
+.btn-logout {
+    background-color: var(--grey-medium);
+    float: right; /* Position logout button to the right */
+    margin-top: -50px; /* Adjust position */
+}
+
+.btn-logout:hover {
+    background-color: #7f8a9a;
+}
+
+/* Confirmation Button in Table */
+.btn-confirm {
+    background-color: var(--primary-green);
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+.btn-confirm:hover {
+    background-color: var(--dark-green);
+}
+
+/* Confirmed Button (disabled) */
+.btn-disabled {
+    background-color: var(--grey-medium);
+    cursor: not-allowed;
+    opacity: 0.8;
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+.btn-disabled:hover {
+    background-color: var(--grey-medium); /* No hover effect for disabled */
+}
+
+/* Messages (for login/modal) */
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: var(--red-danger);
+}
+/* For success messages if needed */
+.message.success {
+    color: var(--dark-green);
+}
+
+
+/* Dashboard Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+header h1 {
+    margin-bottom: 0;
+    text-align: left;
+    flex-grow: 1; /* Allows it to take available space */
+}
+
+header p {
+    margin-right: 20px;
+    font-size: 1.1em;
+}
+
+/* Search Section */
+.search-section {
+    display: flex;
+    gap: 10px; /* Space between input and button */
+    margin-bottom: 25px;
+}
+
+.search-section input {
+    flex-grow: 1; /* Make search bar take up most space */
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Removes double borders */
+    min-width: 700px; /* Ensure table doesn't get too squished */
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+thead th {
+    background-color: var(--grey-light);
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+tbody tr:last-child td {
+    border-bottom: none; /* No border on the last row */
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--grey-light); /* Zebra striping */
+}
+
+/* UI States */
+/* Grey rows + disabled buttons for confirmed */
+.row-confirmed {
+    background: #f3f4f6; /* Lighter grey for confirmed rows */
+    opacity: 0.7; /* Slightly dim it */
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: var(--grey-medium);
+    font-style: italic;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Auto margin for centering */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%; /* Could be responsive */
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    position: relative; /* For positioning close button */
+    text-align: center;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.modal-content strong {
+    color: #1a202c;
+}
+
+.btn-confirm-modal {
+    background-color: var(--primary-green);
+    margin-right: 10px;
+}
+.btn-confirm-modal:hover {
+    background-color: var(--dark-green);
+}
+
+.btn-cancel-modal {
+    background-color: var(--grey-medium);
+}
+.btn-cancel-modal:hover {
+    background-color: #7f8a9a;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+        margin-top: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header h1 {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-logout {
+        margin-top: 10px;
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    .search-section {
+        flex-direction: column;
+    }
+
+    .search-section button {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+        margin-top: 20px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .modal-content {
+        width: 95%;
+    }
+}

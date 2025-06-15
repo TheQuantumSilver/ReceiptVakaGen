@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment System Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Payment Confirmation Dashboard</h1>
+            <p>Welcome, <span id="adminNameDisplay"></span>!</p>
+            <button id="logoutButton" class="btn-logout">Logout</button>
+        </header>
+
+        <div class="search-section">
+            <input type="text" id="searchBar" placeholder="Search by name or petitioner number">
+            <button id="searchButton" class="btn-primary">Search</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Petitioner #</th>
+                        <th>Group</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <tr><td colspan="7" class="no-results">Start typing in the search bar to find petitioners.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3>Confirm Payment</h3>
+                <p>Are you sure you want to confirm payment for:</p>
+                <p><strong>Name:</strong> <span id="modalPetitionerName"></span></p>
+                <p><strong>Petitioner #:</strong> <span id="modalPetitionerNumber"></span></p>
+                <button id="confirmPaymentButton" class="btn-confirm-modal">Confirm</button>
+                <button id="cancelPaymentButton" class="btn-cancel-modal">Cancel</button>
+                <p id="modalMessage" class="message"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

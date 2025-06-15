@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment System Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="adminCode">Admin Code:</label>
+                <input type="password" id="adminCode" name="adminCode" minlength="5" maxlength="20" required placeholder="Enter admin code">
+            </div>
+            <button type="submit">Login</button>
+            <p id="loginMessage" class="message"></p>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
