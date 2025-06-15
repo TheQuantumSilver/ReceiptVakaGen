@@ -1,72 +1,63 @@
 // api/search.js
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express');
-const verifyToken = require('./verify'); // Our JWT verification middleware
-
-// Load environment variables
-// For local testing outside a Vercel dev server, you might need:
-// require('dotenv').config({ path: '../.env.local' });
+const verifyToken = require('./verify');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY; // Using service key for backend operations
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-// --- Safety Check for Environment Variables ---
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
   console.error('FATAL ERROR: SUPABASE_URL or SUPABASE_SERVICE_KEY is not defined.');
   process.exit(1);
 }
 
-// Initialize Supabase client using the service_role key
-// This key bypasses RLS, which is necessary for the backend to reliably fetch any petitioner data
-// even if client-side RLS rules are more restrictive.
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
 const app = express();
 app.use(express.json());
 
-// Define the GET /api/search endpoint
-// We use the verifyToken middleware HERE to protect this route.
 app.get('/', verifyToken, async (req, res) => {
-    // Get the search query from the URL (e.g., /api/search?q=john)
     const searchQuery = req.query.q;
 
-    // Basic validation
     if (!searchQuery) {
-        // If no search query is provided, return all petitioners
-        // OR you might choose to return a 400 error. For this guide,
-        // we'll return all if 'q' is empty or missing,
-        // or filter if it's present.
-        // Let's refine this: If no query, we return empty or an error.
-        // A search without a term implies an empty result set usually.
         return res.status(400).json({ message: 'Search query (q) is required.' });
     }
 
     try {
-        let query = supabase
+        let queryBuilder = supabase
             .from('petitioners')
-            .select('*'); // Select ALL fields as per requirements
+            .select('*');
 
-        // Apply search filter if a query is provided
-        // We'll search by name OR petitioner_number
-        // The `ilike` operator is case-insensitive
-        query = query.or(`name.ilike.%<span class="math-inline">\{searchQuery\}%,petitioner\_number\.eq\.</span>{searchQuery}`);
+        // --- THE CORRECTED LINE ---
+        // Build the OR conditions separately for clarity and correctness
+        const orConditions = [];
+
+        // Condition for name search (case-insensitive LIKE)
+        orConditions.push(`name.ilike.%${searchQuery}%`);
+
+        // Condition for exact petitioner_number match (if searchQuery is a valid number)
+        // Ensure it's a number before adding to the conditions for smallint type
+        if (!isNaN(searchQuery) && searchQuery.trim() !== '') {
+            orConditions.push(`petitioner_number.eq.${searchQuery}`);
+        }
+
+        // Apply the OR filter
+        queryBuilder = queryBuilder.or(orConditions.join(',')); // Join conditions with a comma for .or()
 
         // You might want to add ordering for consistency
-        query = query.order('name', { ascending: true }); // Order by name for consistent results
+        queryBuilder = queryBuilder.order('name', { ascending: true });
 
-        const { data, error } = await query;
+        const { data, error } = await queryBuilder; // Use queryBuilder here
 
         if (error) {
             console.error('Supabase search error:', error);
             return res.status(500).json({ message: 'Error performing search.' });
         }
 
-        // If no data is found, return an empty array (or specific message)
         if (!data || data.length === 0) {
-            return res.status(200).json([]); // Return empty array if no results
+            return res.status(200).json([]);
         }
 
-        // Return the found petitioners
         res.status(200).json(data);
 
     } catch (error) {
@@ -75,5 +66,4 @@ app.get('/', verifyToken, async (req, res) => {
     }
 });
 
-// Vercel serverless functions export the app instance
 module.exports = app;

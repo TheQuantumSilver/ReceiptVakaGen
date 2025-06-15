@@ -217,25 +217,9 @@ if (window.location.pathname === '/dashboard.html') {
     // with an empty query here, BUT you would need to adjust performSearch()
     // to handle an empty query by fetching ALL (or all PENDING) records rather than requiring a search term.
     // Given the current performSearch(), it requires a query.
-}
-
-// public/script.js (Continued)
-
-// --- Dashboard Page Logic (dashboard.html - Continued from previous chunk) ---
-if (window.location.pathname === '/dashboard.html') {
-    // ... (Variables for elements and currentPetitionerIdToConfirm, etc., from previous chunk) ...
+        // ... (Variables for elements and currentPetitionerIdToConfirm, etc., from previous chunk) ...
     // Make sure these are accessible:
-    const resultsTableBody = document.getElementById('resultsTableBody');
-    const confirmationModal = document.getElementById('confirmationModal');
-    const modalPetitionerName = document.getElementById('modalPetitionerName');
-    const modalPetitionerNumber = document.getElementById('modalPetitionerNumber');
-    const confirmPaymentButton = document.getElementById('confirmPaymentButton');
-    const cancelPaymentButton = document.getElementById('cancelPaymentButton');
-    const modalCloseButton = document.querySelector('.modal .close-button');
-    const modalMessage = document.getElementById('modalMessage');
-    const token = getAuthToken(); // Get token again, or ensure it's passed/accessible
 
-    let currentPetitionerIdToConfirm = null; // Defined here if not defined globally in this scope
 
     // (Include the performSearch function from the previous chunk here if combining,
     // or ensure it's in the same overall 'if (window.location.pathname === "/dashboard.html")' block)
@@ -346,7 +330,7 @@ if (window.location.pathname === '/dashboard.html') {
 
                 const data = await response.json(); // Parse the JSON response
 
-                if (response.ok) { // If confirmation was successful
+                if (response.status === 200) { // If confirmation was successful
                     showMessage('modalMessage', data.message, true); // Show success message
                     // After successful confirmation, immediately re-run the search
                     // This will refresh the table and show the newly confirmed row as greyed out
@@ -373,4 +357,3 @@ if (window.location.pathname === '/dashboard.html') {
     // 1. Modify `performSearch` to handle an empty `query` by fetching all pending records.
     // 2. Call `performSearch()` here without an argument or with an empty string.
 }
-
