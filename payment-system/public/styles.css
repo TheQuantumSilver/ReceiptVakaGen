@@ -1,13 +1,25 @@
 /* Basic Reset & Global Styles */
 :root {
-    --primary-green: #22c55e;
-    --dark-green: #16a34a;
-    --red-danger: #ef4444;
-    --grey-light: #f3f4f6;
-    --grey-medium: #9ca3af;
-    --text-color: #333;
-    --border-color: #e5e7eb;
-    --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    /* New Black & Gold Color Palette for a classy, premium look */
+    --bg-primary: #121212; /* Deep Black for overall page background */
+    --bg-card: #1f1f1f;    /* Slightly lighter Black for containers (cards) */
+    --primary-accent: #d4af37; /* Classic Gold for main actions */
+    --primary-accent-hover: #b8860b; /* Darker Gold/Goldenrod for hover states */
+    --secondary-accent: #9b870c; /* Muted Gold/Bronze for logout, cancel, danger messages */
+    --secondary-accent-hover: #7a6a09; /* Even darker muted gold on hover */
+    --text-light: #e0e0e0; /* Off-white/light grey for general text */
+    --text-heading: #ffd700; /* Brighter Gold for headings */
+    --border-subtle: #3a3a3a; /* Dark grey subtle border */
+    --shadow-deep: 0 10px 25px rgba(0, 0, 0, 0.7); /* Deeper, more pronounced shadow */
+    --confirmed-bg: #2a2a2a; /* Darker background for confirmed rows */
+    --disabled-btn-bg: #404040; /* Mid-grey for disabled buttons */
+    --table-header-bg: #181818; /* Very dark grey/black for table headers */
+    --table-stripe: #252525; /* Subtle stripe for table rows */
+
+    /* Glaze Effect Variables (subtle gradients/shadows) */
+    --glaze-gradient-gold: linear-gradient(145deg, rgba(212, 175, 55, 0.9), rgba(184, 134, 11, 0.8));
+    --glaze-shadow-gold: 0 0 15px rgba(255, 215, 0, 0.4);
+    --glaze-border-gold: 1px solid rgba(212, 175, 55, 0.6);
 }
 
 * {
@@ -17,132 +29,171 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: #f0f2f5; /* Light background for the whole page */
+    color: var(--text-light); /* Light text on dark background */
+    background-color: var(--bg-primary); /* Deep black background */
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align to top for longer content */
-    min-height: 100vh; /* Ensure it takes full viewport height */
-    padding: 20px;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px; /* Increased padding */
 }
 
 /* General Container Styles */
 .login-container, .dashboard-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: var(--shadow-light);
+    background-color: var(--bg-card); /* Lighter black for containers */
+    padding: 40px; /* More padding */
+    border-radius: 15px; /* Softer rounded corners */
+    box-shadow: var(--shadow-deep); /* Deeper, richer shadow */
     width: 100%;
-    max-width: 500px; /* Max width for login */
-    margin-top: 50px; /* Push down from top */
+    max-width: 600px; /* Wider for login */
+    margin-top: 80px; /* Push down more */
+    border: var(--glaze-border-gold); /* Subtle gold border for glaze effect */
 }
 
 .dashboard-container {
-    max-width: 1200px; /* Wider for dashboard */
-    margin-top: 20px; /* Less margin for dashboard */
+    max-width: 1400px; /* Wider for dashboard */
+    margin-top: 40px;
 }
 
 
 /* Headings */
 h1, h2, h3 {
-    color: #1a202c;
-    margin-bottom: 20px;
+    color: var(--text-heading); /* Brighter gold headings */
+    margin-bottom: 30px; /* More space */
     text-align: center;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Glowing text shadow for premium look */
+    font-weight: 700;
 }
-h2 { font-size: 1.8em; }
-h3 { font-size: 1.5em; }
+h2 { font-size: 2.2em; } /* Larger headings */
+h3 { font-size: 1.9em; }
+
+p {
+    text-align: justify;
+    padding: 10px 0px 10px 0px;
+}
 
 /* Input Fields & Buttons */
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 25px; /* More space */
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 10px; /* More space */
+    font-weight: 600;
+    color: var(--text-light);
 }
 
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    font-size: 1em;
+    padding: 14px 18px; /* Larger padding */
+    border: 1px solid var(--border-subtle); /* Darker border */
+    border-radius: 10px; /* More rounded */
+    font-size: 1.1em;
+    background-color: rgba(255, 255, 255, 0.08); /* Slightly transparent white for a subtle glaze */
+    color: var(--text-light);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: rgba(224, 224, 224, 0.5); /* Lighter, subtle placeholder */
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
     outline: none;
-    border-color: var(--primary-green);
-    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+    border-color: var(--primary-accent); /* Gold border on focus */
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.4), var(--glaze-shadow-gold); /* Double shadow for glaze effect */
+    background-color: rgba(255, 255, 255, 0.15); /* More transparent white on focus */
 }
 
 button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 15px 30px; /* Larger buttons */
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 10px; /* More rounded */
+    font-size: 1.1em;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    color: white;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border 0.3s ease; /* Ensure all transitions are smooth */
+    color: var(--bg-card); /* Dark text on gold buttons */
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Button shadow */
+    background: var(--primary-accent); /* Default gold background */
 }
 
 /* Specific Button Styles */
 button[type="submit"], .btn-primary {
-    background-color: var(--primary-green);
+    background: var(--glaze-gradient-gold); /* Gold gradient for premium look */
+    border: var(--glaze-border-gold);
+    color: var(--bg-card); /* Dark text on gold */
 }
 
 button[type="submit"]:hover, .btn-primary:hover {
-    background-color: var(--dark-green);
+    background: var(--primary-accent-hover); /* Darker gold on hover */
+    transform: translateY(-3px); /* More pronounced lift effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), var(--glaze-shadow-gold); /* Enhanced shadow with gold glow */
+    border: var(--glaze-border-gold);
 }
 
 .btn-logout {
-    background-color: var(--grey-medium);
-    float: right; /* Position logout button to the right */
-    margin-top: -50px; /* Adjust position */
+    background-color: var(--secondary-accent); /* Muted gold logout button */
+    float: right;
+    margin-top: -60px; /* Adjusted position */
+    color: var(--text-light); /* Light text on muted gold */
 }
 
 .btn-logout:hover {
-    background-color: #7f8a9a;
+    background-color: var(--secondary-accent-hover); /* Darker muted gold on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* Confirmation Button in Table */
 .btn-confirm {
-    background-color: var(--primary-green);
-    padding: 8px 15px;
-    font-size: 0.9em;
+    background-color: var(--primary-accent); /* Gold confirm button */
+    padding: 12px 20px; /* Adjusted padding */
+    font-size: 1em;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    color: var(--bg-card); /* Dark text on gold */
 }
 .btn-confirm:hover {
-    background-color: var(--dark-green);
+    background-color: var(--primary-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* Confirmed Button (disabled) */
 .btn-disabled {
-    background-color: var(--grey-medium);
+    background-color: var(--disabled-btn-bg); /* Darker grey disabled button */
     cursor: not-allowed;
-    opacity: 0.8;
-    padding: 8px 15px;
-    font-size: 0.9em;
+    opacity: 0.6; /* Slightly more opaque */
+    padding: 12px 20px;
+    font-size: 1em;
+    box-shadow: none; /* No shadow for disabled */
+    color: rgba(224, 224, 224, 0.6); /* Dimmed light text */
 }
 .btn-disabled:hover {
-    background-color: var(--grey-medium); /* No hover effect for disabled */
+    background-color: var(--disabled-btn-bg); /* No hover effect for disabled */
+    transform: none; /* No lift for disabled */
 }
 
 /* Messages (for login/modal) */
 .message {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 25px;
     font-weight: bold;
-    color: var(--red-danger);
+    color: var(--secondary-accent); /* Muted gold for error messages */
+    text-shadow: 0 0 8px rgba(155, 135, 12, 0.5); /* Subtle glow for messages */
+    font-size: 1.05em;
 }
-/* For success messages if needed */
+/* For success messages */
 .message.success {
-    color: var(--dark-green);
+    color: var(--primary-accent); /* Gold for success messages */
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
 
@@ -151,173 +202,213 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    margin-bottom: 40px; /* More space */
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle); /* Separator */
 }
 
 header h1 {
     margin-bottom: 0;
     text-align: left;
-    flex-grow: 1; /* Allows it to take available space */
+    flex-grow: 1;
+    font-size: 2.5em; /* Larger dashboard heading */
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
 header p {
-    margin-right: 20px;
-    font-size: 1.1em;
+    margin-right: 30px; /* More space */
+    font-size: 1.2em;
+    color: var(--text-light);
+    font-weight: 500;
 }
 
 /* Search Section */
 .search-section {
     display: flex;
-    gap: 10px; /* Space between input and button */
-    margin-bottom: 25px;
+    gap: 20px; /* More space between input and button */
+    margin-bottom: 35px;
 }
 
-.search-section input {
-    flex-grow: 1; /* Make search bar take up most space */
+.search-section button {
+    padding: 14px 28px; /* Match input height */
 }
 
 /* Table Styles */
 .table-container {
-    overflow-x: auto; /* Allows horizontal scrolling on small screens */
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: var(--shadow-light);
+    overflow-x: auto;
+    border: 1px solid var(--border-subtle); /* Darker border */
+    border-radius: 12px; /* More rounded */
+    box-shadow: var(--shadow-deep); /* Deeper shadow */
+    background-color: rgba(0, 0, 0, 0.15); /* More transparent background for table for glaze */
 }
 
 table {
     width: 100%;
-    border-collapse: collapse; /* Removes double borders */
-    min-width: 700px; /* Ensure table doesn't get too squished */
+    border-collapse: collapse;
+    min-width: 800px; /* Ensure table doesn't get too squished */
 }
 
 th, td {
-    padding: 12px 15px;
+    padding: 18px 25px; /* More padding */
     text-align: left;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-subtle); /* Darker border */
+    color: var(--text-light);
 }
 
 thead th {
-    background-color: var(--grey-light);
-    color: #555;
-    font-weight: bold;
+    background-color: var(--table-header-bg); /* Very dark header background */
+    color: var(--text-heading); /* Brighter gold text in headers */
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.85em;
+    font-size: 0.95em;
+    letter-spacing: 0.08em; /* More letter spacing */
 }
 
 tbody tr:last-child td {
-    border-bottom: none; /* No border on the last row */
+    border-bottom: none;
 }
 
 tbody tr:nth-child(even) {
-    background-color: var(--grey-light); /* Zebra striping */
+    background-color: var(--table-stripe); /* Darker zebra striping */
 }
 
 /* UI States */
-/* Grey rows + disabled buttons for confirmed */
+/* Darker grey rows + disabled buttons for confirmed */
 .row-confirmed {
-    background: #f3f4f6; /* Lighter grey for confirmed rows */
-    opacity: 0.7; /* Slightly dim it */
+    background: var(--confirmed-bg); /* Darker grey for confirmed rows */
+    opacity: 0.7; /* Slightly more dim */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    filter: grayscale(0.2); /* Subtle desaturation for confirmed */
 }
 
 .no-results {
     text-align: center;
-    padding: 20px;
-    color: var(--grey-medium);
+    padding: 40px; /* More padding */
+    color: var(--grey-medium); /* Still medium grey for subtle message */
     font-style: italic;
+    font-size: 1.2em;
+    font-weight: 300;
 }
 
 /* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); /* Much darker overlay */
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: auto; /* Auto margin for centering */
-    padding: 30px;
-    border: 1px solid #888;
-    width: 80%; /* Could be responsive */
-    max-width: 400px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    position: relative; /* For positioning close button */
+    background-color: var(--bg-card); /* Use card background */
+    margin: auto;
+    padding: 40px; /* More padding */
+    border: var(--glaze-border-gold); /* Gold border for modal glaze */
+    width: 90%;
+    max-width: 500px; /* Slightly larger max width */
+    border-radius: 15px; /* More rounded */
+    box-shadow: var(--shadow-deep); /* Deeper shadow */
+    position: relative;
     text-align: center;
+    color: var(--text-light);
 }
 
 .close-button {
-    color: #aaa;
+    color: var(--grey-medium);
     float: right;
-    font-size: 28px;
+    font-size: 36px; /* Larger close button */
     font-weight: bold;
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 15px;
+    right: 25px; /* More inward */
+    transition: color 0.3s ease;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: #333;
+    color: var(--text-heading); /* Gold on hover */
     text-decoration: none;
     cursor: pointer;
 }
 
 .modal-content h3 {
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    color: var(--text-heading);
+    font-size: 2em;
 }
 
 .modal-content p {
-    margin-bottom: 10px;
-    line-height: 1.4;
+    margin-bottom: 18px;
+    line-height: 1.6;
+    color: var(--text-light);
+    font-size: 1.05em;
 }
 
 .modal-content strong {
-    color: #1a202c;
+    color: var(--text-heading); /* Brighter gold strong text */
 }
 
 .btn-confirm-modal {
-    background-color: var(--primary-green);
-    margin-right: 10px;
+    background: var(--glaze-gradient-gold); /* Gold gradient */
+    margin-right: 20px; /* More space */
+    color: var(--bg-card); /* Dark text */
 }
 .btn-confirm-modal:hover {
-    background-color: var(--dark-green);
+    background: var(--primary-accent-hover); /* Darker gold */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4), var(--glaze-shadow-gold);
 }
 
 .btn-cancel-modal {
-    background-color: var(--grey-medium);
+    background-color: var(--secondary-accent); /* Muted gold cancel button */
+    color: var(--text-light); /* Light text */
 }
 .btn-cancel-modal:hover {
-    background-color: #7f8a9a;
+    background-color: var(--secondary-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .dashboard-container {
-        padding: 15px;
-        margin-top: 10px;
+    body {
+        padding: 10px;
+    }
+    .dashboard-container, .login-container {
+        padding: 25px;
+        margin-top: 20px;
+        border-radius: 10px;
     }
 
     header {
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 20px;
+        border-bottom: none; /* Remove border on small screens */
     }
 
     header h1 {
         text-align: center;
         width: 100%;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        font-size: 1.6em;
+    }
+
+    header p {
+        margin-right: 0;
+        margin-bottom: 8px;
+        font-size: 0.95em;
+        width: 100%;
+        text-align: center;
     }
 
     .btn-logout {
@@ -329,31 +420,51 @@ tbody tr:nth-child(even) {
 
     .search-section {
         flex-direction: column;
+        gap: 10px;
+        margin-bottom: 25px;
     }
 
     .search-section button {
         width: 100%;
+        padding: 12px 20px;
     }
 
     th, td {
-        padding: 8px 10px;
-        font-size: 0.9em;
+        padding: 12px 15px;
+        font-size: 0.8em;
+    }
+    table {
+        min-width: unset; /* Allow table to shrink on small screens */
     }
 }
 
 @media (max-width: 480px) {
-    .login-container {
+    .login-container, .dashboard-container {
         padding: 20px;
-        margin-top: 20px;
+        margin-top: 15px;
     }
     h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
     button {
-        padding: 8px 15px;
+        padding: 10px 18px;
         font-size: 0.9em;
     }
     .modal-content {
         width: 95%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .close-button {
+        font-size: 30px;
+        right: 15px;
+    }
+    th, td {
+        font-size: 0.75em;
+        padding: 10px;
+    }
+    .no-results {
+        padding: 20px;
+        font-size: 1em;
     }
 }
