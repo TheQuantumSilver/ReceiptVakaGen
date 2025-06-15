@@ -92,27 +92,62 @@ app.post('/', verifyToken, async (req, res) => {
         petitionerData = data;
         console.log(`Payment confirmed for ${petitionerData.name}. Payment ID: ${petitionerData.payment_id}`);
 
+        // --- Determine Payment Amount based on Petitioner Group ---
+        let petitionerCaseNumber; // String for storing the case number
+        let paymentAmountDisplay; // String for displaying in email (e.g., "₹2000")
+        let paymentDescription;   // Contextual description for email
+
+        if (petitionerData.petitioner_group === 3) {
+            paymentAmountDisplay = '₹1050'; // Amount for Group 3
+            paymentDescription = 'for third phase collection';
+            petitionerCaseNumber = 'WPA26400/2024'
+        } else if (petitionerData.petitioner_group === 2) {
+            paymentAmountDisplay = '₹1950'; // Amount for Group 1 and 2
+            paymentDescription = 'for fourth phase collection';
+            petitionerCaseNumber = 'WPA13054/2024'
+        } else if (petitionerData.petitioner_group === 1) {
+            paymentAmountDisplay = '₹1950'; // Amount for Group 1 and 2
+            paymentDescription = 'for fourth phase collection';
+            petitionerCaseNumber = 'WPA3028/2024'
+        } else {
+            // Default case for any other group, or if group is not set/invalid
+            paymentAmountDisplay = 'Amount not specified';
+            paymentDescription = 'for registration';
+            console.warn(`Petitioner ${petitionerData.id} has unhandled group: ${petitionerData.petitioner_group}.`);
+        }
+
         // Step 2: Send Email Receipt
         const mailOptions = {
             from: GMAIL_USER, // Your Gmail user
             to: petitionerData.email, // Petitioner's email address
             subject: `Payment Confirmed - ${petitionerData.name}`,
             html: `
-                <p>Dear ${petitionerData.name},</p>
-                <p>Your payment has been successfully confirmed for the event/service.</p>
-                <p><strong>Payment Details:</strong></p>
-                <ul>
-                    <li><strong>Name:</strong> ${petitionerData.name}</li>
-                    <li><strong>Petitioner #:</strong> ${petitionerData.petitioner_number}</li>
-                    <li><strong>Group:</strong> ${petitionerData.petitioner_group}</li>
-                    <li><strong>Department:</strong> ${petitionerData.department}</li>
-                    <li><strong>Payment ID:</strong> ${petitionerData.payment_id}</li>
-                    <li><strong>Amount:</strong> Rs. 1950</li>
-                </ul>
-                <p>Confirmed by: ${confirmedByAdminName}</p>
-                <p>Date: ${new Date(petitionerData.confirmed_at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
-                <p>Thank you!</p>
-                <p>Core 0 Legal Team</p>
+                <div style="font-family: Helvetica, sans-serif;">
+                    <p>Dear ${petitionerData.name},</p>
+                    <p>Your payment ${paymentDescription} has been successfully confirmed.</p>
+                    <p><strong>Registration Details:</strong></p>
+                    <ul>
+                        <li><strong>Name:</strong> ${petitionerData.name}</li>
+                        <li><strong>Petitioner Serial No.:</strong> ${petitionerData.petitioner_number}</li>
+                        <li><strong>Phase:</strong> ${petitionerData.petitioner_group}</li>
+                        <li><strong>Case:</strong> ${petitionerCaseNumber}</li>
+                        <li><strong>Department:</strong> ${petitionerData.department}</li>
+                        <li><strong>Amount:</strong> ${paymentAmountDisplay}</li><br>
+                        <li><strong>Payment ID:</strong> ${petitionerData.payment_id}</li>
+                    </ul>
+                    <p><strong>NOTE:</strong> <em>You must take a screenshot of this email receipt and upload it to the google form. Failure
+                        to do so will result in your payment not being processed.</em></p>
+                    <p><strong>Google Form: </strong>https://forms.gle/yTp9UqVxYB6ERA4d8</p>
+                    <p><strong>Confirmed by:</strong> ${confirmedByAdminName}
+                        <br><strong>Date:</strong> ${new Date(petitionerData.confirmed_at).toLocaleString('en-IN', { timeZone:
+                        'Asia/Kolkata' })}
+                    </p>
+                    <p>Thank you!
+                        <br><strong>Core 0 Legal Team</strong>
+                    </p>
+                    <p> --- </p>
+                    <p><em>Please do not reply to this mail as this is a system generated mail.</em></p>
+                </div>
             `,
         };
 
@@ -121,7 +156,7 @@ app.post('/', verifyToken, async (req, res) => {
 
         // Step 3: Respond to Frontend
         res.status(200).json({
-            message: 'Payment confirmed and email sent successfully.',
+            message: `Payment confirmed and email sent successfully. Amount: ${paymentAmountDisplay}.`,
             petitioner: {
                 id: petitionerData.id,
                 name: petitionerData.name,
@@ -138,9 +173,6 @@ app.post('/', verifyToken, async (req, res) => {
 
     } catch (error) {
         console.error('Confirmation process error:', error);
-        // If email sending fails AFTER database update, we should still return success for DB.
-        // But if the entire process failed before DB update, return 500.
-        // For simplicity here, we catch general errors. In production, you might distinguish.
         res.status(500).json({ message: 'An unexpected error occurred during confirmation.' });
     }
 });
