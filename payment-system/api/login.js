@@ -8,8 +8,11 @@ const express = require('express');
 // require('dotenv').config({ path: '../.env.local' });
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
+console.log('SUPABASE_URL exists:', !!SUPABASE_URL); // Use !! to convert to boolean
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+console.log('SUPABASE_SERVICE_KEY exists:', !!SUPABASE_SERVICE_KEY);
 const JWT_SECRET = process.env.JWT_SECRET;
+console.log('JWT_SECRET exists:', !!JWT_SECRET);
 
 // --- Safety Checks for Environment Variables ---
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !JWT_SECRET) {
