@@ -13,7 +13,19 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/public"
+    },
+    {
+      "source": "/",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/dashboard.html",
+      "destination": "/public/dashboard.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     }
   ],
   "buildCommand": "npm run build",
