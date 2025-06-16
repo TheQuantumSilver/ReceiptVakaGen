@@ -10,24 +10,22 @@
       "use": "@vercel/static"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/public/$1"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/",
-      "destination": "/public/index.html"
+      "src": "/",
+      "dest": "/public/index.html"
     },
     {
-      "source": "/dashboard.html",
-      "destination": "/public/dashboard.html"
+      "src": "/dashboard.html",
+      "dest": "/public/dashboard.html"
     },
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
-  ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  ]
 }
